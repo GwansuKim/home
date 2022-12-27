@@ -9,12 +9,19 @@ let todoList = [
 
 const server = http.createServer((req, res) => {
   const myurl = new URL("http://127.0.0.1:3000" + req.url);
-  for (let i = 1; i <= todoList.length; i++) {
+  /* for (let i = 1; i <= todoList.length; i++) {
     if (myurl.pathname == "/todolist") {
       res.end(JSON.stringify(todoList));
     } else if (myurl.searchParams.get("no") == i) {
       res.end(JSON.stringify(todoList[i - 1]));
     }
+  }
+}); */
+  if (myurl.pathname == "/todolist") {
+    res.end(JSON.stringify(todoList));
+  } else if (myurl.pathname == "/todo") {
+    let no = myurl.searchParams.get("no");
+    res.end(JSON.stringify(todoList[no - 1]));
   }
 });
 server.listen(3000, () => {

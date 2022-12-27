@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>comments</title>
+  </head>
+  <body>
+    <h3>comments 관리</h3>
+    <button onclick="selectPost()">코멘트 조회</button>
+    <div id="commentslist"></div>
+    <form>
+      <input type="text" id="id" placeholder="ID" />
+      <input type="text" id="body" placeholder="body" />
+      <button id="btnAdd" type="button">코멘트 등록</button>
+    </form>
+    <form>
+      <input type="text" id="id2" placeholder="ID" />
+      <input type="text" id="body2" placeholder="body" />
+      <button id="btnModify" type="button">코멘트 수정</button>
+    </form>
+    <script>
+      selectComments(); //hoisting
+
+      btnAdd.addEventListener("click", insertComments); //등록기능. 직접이벤트
+      commentslist.addEventListener("click", deleteComments); //삭제기능. 그룹(위임)이벤트
+      btnModify.addEventListener("click", modifyComments); //수정기능. 직접이벤트
+
+      //삭제 - delete 방식
+      function deleteComments(ev) {
+        let id = ev.target.getAttribute("data-id");
+        let url = "http://localhost:3000/comments/" + id;
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          selectComments();
+        };
+        xhr.open("delete", url);
+        xhr.send();
+      }
+
+      //등록 - json 형태의 파라미터
+      function insertComments() {
+        let url = "http://localhost:3000/comments";
+        let data = { id: id.value, body: body.value };
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          selectComments();
+        };
+        xhr.open("post", url);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(data));
+      }
+
+      //수정
+      function modifyComments() {
+        let url = "http://localhost:3000/comments/" + id2.value;
+        let data = { id: id2.value, body: body2.value };
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          selectComments();
+        };
+        xhr.open("put", url);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(data));
+      }
+
+      //전체조회
+      function selectComments() {
+        let url = "http://localhost:3000/comments";
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          const comments = JSON.parse(xhr.responseText);
+          commentslist.innerHTML = "";
+          for (let i = 0; i < comments.length; i++) {
+            commentslist.innerHTML += `
+            <div>${comments[i].id} ${comments[i].body}
+            <button data-id='${comments[i].id}''>삭제</button></div>
+            `;
+          }
+        };
+        xhr.open("get", url);
+        xhr.send();
+      }
+    </script>
+  </body>
+</html>

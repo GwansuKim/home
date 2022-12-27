@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>array</title>
+  </head>
+  <body>
+    <script>
+      //얕은 복사
+      let arr1 = ["사과", "바나나"];
+      let arr2 = arr1;
+      arr2[0] = "포도";
+      console.table(arr1[0]);
+      //깊은 복사 *단, 배열 안에 객체는 얕은 복사
+      let arr3 = ["사과", "바나나", { id: 1, name: "park", age: 1 }];
+      let arr4 = [...arr3];
+      arr4[0] = "포도";
+      console.table(arr3[0]);
+      arr3[2].name = "kim";
+      console.table(arr4);
+      //깊은 복사
+      let arr5 = ["사과", "바나나", { id: 1, name: "park", age: 1 }];
+      let arr6 = JSON.parse(JSON.stringify(arr5));
+      arr5[2].name = "kim";
+      console.table(arr6);
+      //length
+      arr2.length = 0; //배열 모든 요소 삭제
+      console.table("arr2", arr2);
+    </script>
+  </body>
+</html>

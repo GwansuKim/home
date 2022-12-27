@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>post</title>
+  </head>
+  <body>
+    <h3>post 관리</h3>
+    <button onclick="selectPost()">post조회</button>
+    <div id="postlist"></div>
+    <form>
+      <input type="text" id="id" placeholder="ID" />
+      <input type="text" id="title" placeholder="title" />
+      <input type="text" id="author" placeholder="author" />
+      <button id="btnAdd" type="button">포스트등록</button>
+    </form>
+    <script>
+      selectPost(); //hoisting
+
+      btnAdd.addEventListener("click", insertPost); //등록기능. 직접이벤트
+      postlist.addEventListener("click", deletePost); //삭제기능. 그룹(위임)이벤트
+
+      //post 삭제 - delete 방식
+      function deletePost(ev) {
+        let id = ev.target.getAttribute("data-id");
+        let url = "http://localhost:3000/post/" + id;
+        fetch(url, { method: "delete" }).then((res) => selectPost());
+      }
+
+      //post등록 - post방식, json 형태의 파라미터
+      function insertPost() {
+        let url = "http://localhost:3000/post";
+        let data = { id: id.value, title: title.value, author: author.value };
+        fetch(url, {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.json())
+          .then((res) => selectPost());
+      }
+      //post 전체조회
+      function selectPost() {
+        let url = "http://localhost:3000/post";
+        //ajax 요청을 동기식으로 처리
+        fetch(url, { method: "get" })
+          .then((res) => res.json())
+          .then((post) => {
+            postlist.innerHTML = "";
+            for (let i = 0; i < post.length; i++) {
+              postlist.innerHTML += `
+            <div>${post[i].id} ${post[i].title}
+            <button data-id='${post[i].id}''>삭제</button></div>
+            `;
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
