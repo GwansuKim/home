@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>regularExpression</title>
+  </head>
+  <body>
+    <input id="txt" />
+    <button id="btn" type="button">검사</button>
+    <script>
+      btn.addEventListener("click", function () {
+        //패턴 : 정규식 리터럴(상수)
+        //let regexp = /^\d{3}$/;
+        let regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        const re = regexp.test(txt.value);
+        console.log(re);
+      });
+    </script>
+  </body>
+</html>
