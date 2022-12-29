@@ -9,10 +9,10 @@ router.get("/", function (req, res, next) {
 router.post("/login", function (req, res) {
   req.session.email = req.body.email;
   req.session.is_logined = true;
-  /*   req.session.save((err) => {
+  req.session.save((err) => {
     if (err) throw err;
     res.redirect("/");
-  }); */
+  });
 });
 
 router.get("/logout", (req, res, next) => {
