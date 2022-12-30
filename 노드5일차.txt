@@ -1,0 +1,46 @@
+도서관리
+- 테이블 설계, 생성
+books
+   no      도서번호    INT           NN,    PK,   AI
+   title   도서명      VARCHAR(45)   NN
+   price   가격        INT
+   writer  저자        VARCHAR(45)
+   desc    설명        VARCHAR(200)
+
+   insert
+   update
+   delete
+   select
+
+- 서버프로그램 - 라우터
+
+restful : rest 서버
+    /books   :  get
+    /books/1 :  get
+    /books/1 :  delete
+    /books   :  post  : data
+    /books/1 :  put   : data
+
+
+- 뷰(html, ajax)
+
+-------------------------------------------
+화면설계 -> pdf : 
+chichi@chol.com
+-------------------------------------------
+프로젝트
+  express  프로젝트명(폴더)
+  cd 폴더
+  npm install
+
+  npm install mysql
+  npm install nodemon
+
+
+  로그인 -- session
+
+ 
+
+  
+
+
