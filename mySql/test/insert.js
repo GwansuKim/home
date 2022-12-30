@@ -15,16 +15,20 @@ connection.connect(); //DB 접속
 
 let sql = "insert into customers set ?";
 let data = {
-  name: "lee",
-  email: "lee@mail.com",
-  phone: "010-0000-0003",
+  name: "han",
+  email: "han@mail.com",
+  phone: "010-0000-0006",
   address: "",
 };
 
-connection.query(sql, data, function (err, results, fields) {
+connection.query(sql, data, function (err, results) {
   if (err) {
     console.log(err);
   }
+  console.log(results);
+});
+
+connection.query("select last_insert_id()", (err, results) => {
   console.log(results);
 });
 

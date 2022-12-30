@@ -99,7 +99,16 @@ function update() {
     })
       .then((res) => res.json())
       .then((res) => {
-        selectAll();
+        if (res.results == true) {
+          alert("수정 완료");
+          selectAll();
+        } else {
+          alert("수정 실패");
+          selectAll();
+        }
+      })
+      .catch(() => {
+        alert("수정실패");
       });
   });
 }
