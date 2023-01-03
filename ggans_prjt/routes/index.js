@@ -8,17 +8,16 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/login", (req, res, next) => {
-  sql = "SELECT * FROM accountnote where username=?";
+  sql = "SELECT * FROM memberlist where username=?";
   pool.query(sql, req.body.username, function (err, results, fields) {
     if (err) {
       console.log(err);
     }
     if (results.length > 0) {
-      console.log(results[0].password);
-      console.log(req.body.password);
-      console.log(results[0].password == req.body.password);
       if (results[0].password == req.body.password) {
+        req.session.username = results[0].username;
         res.redirect("/calendar");
+        //res.send(req.session.username);
       } else {
         res.send(`
           <script>
@@ -26,7 +25,6 @@ router.post("/login", (req, res, next) => {
           location.href="/"
           </script>
         `);
-        // res.redirect("/");
       }
     } else {
       res.send(`
@@ -40,17 +38,36 @@ router.post("/login", (req, res, next) => {
 });
 
 router.post("/signUp", (req, res, next) => {
-  sql = "insert into accountnote set ?";
-  pool.query(sql, req.body, function (err, results, fields) {
+  sql = "SELECT * FROM memberlist where username=?";
+  pool.query(sql, req.body.username, function (err, results, fields) {
     if (err) {
       console.log(err);
     }
-    res.send(`
+    for (let i = 0; i < results.length; i++) {
+      if (results[i].username == req.body.username) {
+        res.send(`
+      <script>
+      alert("이미 존재하는 ID입니다");
+      location.href="/"
+      </script>
+      `);
+      }
+      return;
+    }
+    sql = "insert into memberlist set ?";
+    pool.query(sql, req.body, function (err, results, fields) {
+      if (err) {
+        console.log(err);
+      }
+      res.send(
+        `
           <script>
           alert("회원 정보가 등록되었습니다!");
           location.href="/"
           </script>
-        `);
+          `
+      );
+    });
   });
 });
 

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   calendarInit();
 });
+const url = "/calendar";
 /*
     달력 렌더링 할 때 필요한 정보 목록 
 
@@ -28,7 +29,9 @@ function calendarInit() {
   var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
 
   // kst 기준 현재시간
-  // console.log(thisMonth);
+  //console.log(thisMonth.getFullYear());
+  //console.log(thisMonth.getMonth() + 1);
+  //console.log(thisMonth.getDate());
 
   // 캘린더 렌더링
   renderCalender(thisMonth);
@@ -45,7 +48,7 @@ function calendarInit() {
     var prevDay = startDay.getDay();
 
     // 이번 달의 마지막날 날짜와 요일 구하기
-    var endDay = new Date(currentYear, currentMonth + 1, 0);
+    const endDay = new Date(currentYear, currentMonth + 1, 0);
     var nextDate = endDay.getDate();
     var nextDay = endDay.getDay();
 
@@ -60,20 +63,21 @@ function calendarInit() {
     calendar.innerHTML = "";
 
     // 지난달
-    for (var i = prevDate - prevDay + 1; i <= prevDate; i++) {
+    for (let i = prevDate - prevDay + 1; i <= prevDate; i++) {
       calendar.innerHTML =
         calendar.innerHTML + '<div class="day prev disable">' + i + "</div>";
     }
     // 이번달
-    for (var i = 1; i <= nextDate; i++) {
-      calendar.innerHTML =
-        calendar.innerHTML + '<div class="day current">' + i + "</div>";
+    for (let i = 1; i <= nextDate; i++) {
+      calendar.innerHTML += '<div class="day current">' + i + "</div>";
     }
     // 다음달
-    for (var i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
+    for (let i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
       calendar.innerHTML =
         calendar.innerHTML + '<div class="day next disable">' + i + "</div>";
     }
+
+    getPrice();
 
     // 오늘 날짜 표기
     if (today.getMonth() == currentMonth) {
@@ -98,4 +102,30 @@ function calendarInit() {
       thisMonth = new Date(currentYear, currentMonth + 1, 1);
       renderCalender(thisMonth);
     });
+
+  function getPrice() {
+    const data = thisMonth.getFullYear() + "" + (thisMonth.getMonth() + 1);
+    fetch(`${url}/re`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ month: data }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          wel_user.innerHTML = res[0].username + "님의 소비노트";
+          for (let i = 0; i < res.length; i++) {
+            tt_price.innerHTML += res[i].price;
+          }
+        }
+      });
+  }
 }
+
+let current = document.getElementsByClassName("dates");
+current[0].addEventListener("click", (ev) => {
+  if (ev.target.classList.contains("current")) {
+    let num = ev.target.innerHTML;
+    location.href = `/accountNote/${num}`;
+  }
+});
