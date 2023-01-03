@@ -49,7 +49,7 @@ function calendarInit() {
 
     // 이번 달의 마지막날 날짜와 요일 구하기
     const endDay = new Date(currentYear, currentMonth + 1, 0);
-    var nextDate = endDay.getDate();
+    const nextDate = endDay.getDate();
     var nextDay = endDay.getDay();
 
     // console.log(prevDate, prevDay, nextDate, nextDay);
@@ -77,14 +77,13 @@ function calendarInit() {
         calendar.innerHTML + '<div class="day next disable">' + i + "</div>";
     }
 
-    getPrice();
-
     // 오늘 날짜 표기
     if (today.getMonth() == currentMonth) {
       todayDate = today.getDate();
       var currentMonthDate = document.querySelectorAll(".dates .current");
       currentMonthDate[todayDate - 1].classList.add("today");
     }
+    getTotal();
   }
 
   // 이전달로 이동
@@ -103,7 +102,7 @@ function calendarInit() {
       renderCalender(thisMonth);
     });
 
-  function getPrice() {
+  function getTotal() {
     const data = thisMonth.getFullYear() + "" + (thisMonth.getMonth() + 1);
     fetch(`${url}/re`, {
       method: "POST",
@@ -112,20 +111,28 @@ function calendarInit() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res) {
-          wel_user.innerHTML = res[0].username + "님의 소비노트";
+        if (res.length) {
+          wel_user.innerHTML = res[0].username + "'s<BR>소비 노트";
+          let total = 0;
           for (let i = 0; i < res.length; i++) {
-            tt_price.innerHTML += res[i].price;
+            total += res[i].price;
+            tt_price.innerHTML = "총액 : " + total;
           }
+        } else {
+          tt_price.innerHTML = "총액 : 0";
         }
       });
   }
-}
 
-let current = document.getElementsByClassName("dates");
-current[0].addEventListener("click", (ev) => {
-  if (ev.target.classList.contains("current")) {
-    let num = ev.target.innerHTML;
-    location.href = `/accountNote/${num}`;
-  }
-});
+  let current = document.getElementsByClassName("dates");
+  current[0].addEventListener("click", (ev) => {
+    if (ev.target.classList.contains("current")) {
+      let num =
+        thisMonth.getFullYear() +
+        "" +
+        (thisMonth.getMonth() + 1) +
+        ev.target.innerHTML;
+      location.href = `/accountNote/${num}`;
+    }
+  });
+}
