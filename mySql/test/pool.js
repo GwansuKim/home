@@ -12,4 +12,13 @@ const conn = {
 };
 
 let pool = mysql.createPool(conn); //DB커넥션 생성
-module.exports = pool;
+
+function query(sql) {
+  return new Promise((resolve, reject) => {
+    pool.query(sql, (err, results, field) => {
+      resolve(results);
+    });
+  });
+}
+
+module.exports = { pool, query }; //    { pool:pool, query:query }

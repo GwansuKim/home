@@ -4,31 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>calendar</title>
-    <link href="./calendar.css" rel="stylesheet" />
+    <title>fullcalendar</title>
+    <link href="./fullcalendar.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.2/index.global.min.js"></script>
   </head>
   <body>
-    <div class="sec_cal">
-      <h1 id="wel_user"></h1>
-      <div class="cal_nav">
-        <a href="javascript:;" class="nav-btn go-prev">prev</a>
-        <div class="year-month"></div>
-        <a href="javascript:;" class="nav-btn go-next">next</a>
-      </div>
-      <div class="cal_wrap">
-        <div class="days">
-          <div class="day">MON</div>
-          <div class="day">TUE</div>
-          <div class="day">WED</div>
-          <div class="day">THU</div>
-          <div class="day">FRI</div>
-          <div class="day">SAT</div>
-          <div class="day">SUN</div>
-        </div>
-        <div class="dates"></div>
-      </div>
-      <p id="tt_price">총액 :</p>
-    </div>
-    <script src="calendar.js"></script>
+    <div id="firdiv"><button id="monthly">월별 보기</button></div>
+    <div id="calendar"></div>
+    <h3 id="totalprice"></h3>
+    <div id="logout"><button id="btnout">로그아웃</button></div>
+    <script src="fullcalendar.js"></script>
   </body>
 </html>

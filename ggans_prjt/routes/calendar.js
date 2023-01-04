@@ -14,11 +14,10 @@ router.get("/", function (req, res, next) {
   });
 });
 
-router.post("/re", function (req, res, next) {
+router.get("/re", function (req, res, next) {
   sql =
-    "select username, buydate, price from accountnote where username=? and concat(year(buydate),month(buydate))=? ";
-  let data = [req.session.username, req.body.month];
-  pool.query(sql, data, function (err, results, fields) {
+    "select sum(price) title, date_format(buydate, '%Y-%m-%d') start from accountnote where username=? group by buydate";
+  pool.query(sql, req.session.username, function (err, results, fields) {
     if (err) {
       console.log(err);
     }

@@ -16,19 +16,79 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
+    <link href="/accountNote.css" rel="stylesheet" />
   </head>
   <body>
     <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col">No.</th>
+          <th scope="col">구매일</th>
           <th scope="col">구입처</th>
           <th scope="col">구매 품목</th>
           <th scope="col">카테고리</th>
           <th scope="col">가격</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="tbody">
+        <%for (let i = 0; i < results.length; i++) {%>
+        <tr>
+          <td><%=i + 1%><input type="hidden" value="<%=results[i].no%>" /></td>
+          <td><%=results[i].dt%></td>
+          <td><%=results[i].wherebuy%></td>
+          <td><%=results[i].item%></td>
+          <td><%=results[i].category%></td>
+          <td><%=results[i].price%></td>
+          <td><button id="delbtn">삭제</button></td>
+          <td><button id="selbtn">조회</button></td>
+        </tr>
+        <%}%>
+      </tbody>
+      <tfoot id="tfoot">
+        <tr>
+          <td><input name="no" type="hidden" id="no" /></td>
+          <td><input name="buydate" type="date" id="buydate" /></td>
+          <td><input name="wherebuy" placeholder="구매처" id="wherebuy" /></td>
+          <td><input name="item" placeholder="구매 품목" id="item" /></td>
+          <td>
+            <select name="category" id="category">
+              <optgroup label="생활비">
+                <option value="식비">식비</option>
+                <option value="생활용품">생활용품</option>
+                <option value="의료건강비">의료건강비</option>
+                <option value="의류미용비">의류미용비</option>
+                <option value="문화운동비">문화운동비</option>
+                <option value="반려동물비">반려동물비</option>
+              </optgroup>
+              <optgroup label="고정비">
+                <option value="주유비">주유비</option>
+                <option value="차량교통비">차량교통비</option>
+                <option value="주거비">주거비</option>
+                <option value="보험비">보험비</option>
+                <option value="대출이자">대출이자</option>
+              </optgroup>
+              <option value="경조사비">경조사비</option>
+              <option value="여행비">여행비</option>
+              <option value="세금">세금</option>
+              <option value="기타돌발비">기타돌발비</option>
+            </select>
+          </td>
+          <td>
+            <input
+              name="price"
+              placeholder="가격"
+              type="number"
+              min="0"
+              step="100"
+              id="price"
+            />
+          </td>
+          <td><button id="insbtn">추가</button></td>
+          <td><button id="updbtn">수정</button></td>
+        </tr>
+      </tfoot>
     </table>
+    <div id="locdiv"><button id="backbtn">뒤로가기</button></div>
+    <script src="/accountNote.js"></script>
   </body>
 </html>
