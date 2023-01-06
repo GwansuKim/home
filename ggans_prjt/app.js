@@ -10,6 +10,7 @@ var indexRouter = require("./routes/index");
 var calendarRouter = require("./routes/calendar");
 var accountNoteRouter = require("./routes/accountNote");
 var monthlyCategoryRouter = require("./routes/monthlyCategory");
+var passwordlookupRouter = require("./routes/passwordlookup");
 
 var app = express();
 
@@ -27,7 +28,6 @@ app.use(
       //secure: true,     //https일때 쿠키 저장
       maxAge: 24 * 6 * 600000, //밀리초
     },
-    store: new fileStore(),
   })
 );
 
@@ -40,7 +40,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/calendar", calendarRouter);
 app.use("/accountNote", accountNoteRouter);
-app.use("/monthlyCategory", monthlyCategoryRouter);
+app.use("/monthlycategory", monthlyCategoryRouter);
+app.use("/passwordlookup", passwordlookupRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

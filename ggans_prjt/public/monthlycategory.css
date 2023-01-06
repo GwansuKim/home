@@ -1,0 +1,13 @@
+* {
+  text-align: center;
+}
+
+#locdiv {
+  text-align: center;
+}
+
+button {
+  border: none;
+  background-color: #ccc;
+  border-radius: 10px;
+}

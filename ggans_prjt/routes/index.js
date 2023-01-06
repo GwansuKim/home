@@ -8,7 +8,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/login", (req, res, next) => {
-  sql = "SELECT * FROM memberlist where username=?";
+  let sql = "SELECT * FROM memberlist where username=?";
   pool.query(sql, req.body.username, function (err, results, fields) {
     if (err) {
       console.log(err);
@@ -69,6 +69,19 @@ router.post("/signUp", (req, res, next) => {
       );
     });
   });
+});
+
+router.get("/logout", (req, res, next) => {
+  if (req.session.username) {
+    req.session.destroy(function (err) {
+      if (err) {
+        throw err;
+      }
+      res.redirect("/");
+    });
+  } else {
+    res.redirect("/");
+  }
 });
 
 module.exports = router;

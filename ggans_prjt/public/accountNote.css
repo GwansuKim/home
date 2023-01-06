@@ -6,7 +6,9 @@ tbody {
 button {
   border: none;
   background-color: #ccc;
-  border-radius: 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  padding: 5px;
 }
 
 #selectbox.option {

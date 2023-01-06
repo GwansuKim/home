@@ -4,7 +4,7 @@ const pool = require("./pool");
 
 router.get("/:id", function (req, res, next) {
   sql =
-    "Select *, date_format(buydate, '%Y-%m-%d') dt from accountnote where username=? and concat(year(buydate),month(buydate),dayofmonth(buydate))=?";
+    "Select *, date_format(buydate, '%Y-%m-%d') dt from accountnote where username=? and concat(year(buydate),date_format(buydate, '%m'),dayofmonth(buydate))=?";
   let data = [req.session.username, req.params.id];
   pool.query(sql, data, function (err, results, fields) {
     if (err) {
@@ -18,13 +18,12 @@ router.get("/:id", function (req, res, next) {
 //단건조회
 router.get("/:page/:id", (req, res, next) => {
   sql =
-    "Select *, date_format(buydate, '%Y-%m-%d') dt from accountnote where username=? and concat(year(buydate),month(buydate),dayofmonth(buydate))=? and no=?";
+    "Select *, date_format(buydate, '%Y-%m-%d') dt from accountnote where username=? and concat(year(buydate),date_format(buydate, '%m'),dayofmonth(buydate))=? and no=?";
   let data = [req.session.username, req.params.page, req.params.id];
   pool.query(sql, data, function (err, results, fields) {
     if (err) {
       console.log(err);
     }
-    console.log(results);
     res.json(results);
   });
 });
@@ -55,9 +54,8 @@ router.put("/:page/:id", (req, res, next) => {
   pool.query(sql, data, function (err, results, fields) {
     if (err) {
       console.log(err);
-
-      res.send();
     }
+    res.send(results);
   });
 });
 

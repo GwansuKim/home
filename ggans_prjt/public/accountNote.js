@@ -1,5 +1,14 @@
 const url = window.location.pathname;
 
+let today =
+  url.toString().slice(13).substring(0, 4) +
+  "-" +
+  url.toString().substring(17, 19) +
+  "-" +
+  ("00" + url.toString().slice(13).substring(6)).slice(-2);
+
+buydate.value = today;
+
 oneselect();
 insert();
 remove();
@@ -87,9 +96,16 @@ function update() {
       })
         .then((res) => res.json())
         .then((res) => {
-          location.href = `${url}`;
+          if (res.changedRows > 0) {
+            alert("수정 완료");
+            window.location.reload();
+          } else {
+            alert("수정 실패");
+            window.location.reload();
+          }
         })
         .catch(() => {
+          alert("오류");
           window.location.reload();
         });
     }

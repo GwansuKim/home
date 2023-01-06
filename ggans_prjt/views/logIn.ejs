@@ -76,13 +76,8 @@
                 class="login_form button animated fadeInUp animate4"
                 value="로그인"
               />
-              <p>
-                <a
-                  id="lost-password-link"
-                  href=""
-                  class="animated fadeIn animate5"
-                  >비밀번호를 잊어버렸어요 !</a
-                >
+              <p id="lost-password-link" class="animated fadeIn animate5">
+                <a> 비밀번호를 잊어버렸어요 ! </a>
               </p>
             </fieldset>
           </form>
@@ -112,18 +107,18 @@
                 <li>
                   <input
                     class="login animated fadeInUp animate4"
-                    name="birthdate"
-                    type="date"
-                    required
-                    value=""
+                    type="textbox"
+                    value="아래 칸에 생년월일을 선택해주세요"
+                    readonly
                   />
                 </li>
                 <li>
                   <input
                     class="login animated fadeInUp animate4"
-                    type="textbox"
-                    value="위 칸에 생년월일을 선택해주세요"
-                    readonly
+                    name="birthdate"
+                    type="date"
+                    required
+                    value=""
                   />
                 </li>
               </ul>
@@ -139,5 +134,12 @@
       </div>
     </div>
     <script src="index.js"></script>
+    <script>
+      document
+        .getElementById("lost-password-link")
+        .addEventListener("click", () => {
+          location.href = "/passwordlookup";
+        });
+    </script>
   </body>
 </html>

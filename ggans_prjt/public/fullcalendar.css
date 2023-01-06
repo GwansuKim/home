@@ -1,13 +1,43 @@
 h3 {
   text-align: right;
+  padding-right: 17.5%;
 }
 
-#logout {
-  text-align: right;
+#monthly {
+  margin-left: 17.5%;
+  float: left;
 }
 
-#firdiv {
-  text-align: right;
-  border: none;
+#btnout {
+  margin-right: 17.5%;
   margin-bottom: 10px;
+  float: right;
+}
+
+#calendar {
+  width: 65%;
+  margin: 0 auto;
+  clear: both;
+}
+
+.fc-day-sun {
+  color: red;
+}
+
+.fc-day-sat {
+  color: blue;
+}
+
+#ttdv {
+  margin-right: 17.5%;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.mkbtn {
+  border: none;
+  background-color: #ccc;
+  border-radius: 20px;
+  padding: 10px;
+  font-weight: bold;
 }
